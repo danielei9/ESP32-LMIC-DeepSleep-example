@@ -200,6 +200,7 @@ void command_callback(uint8_t *buff, uint8_t size)
          * @brief SET_VAR_B
          * PUT varB
          * Example:
+         * 0xA2 0x01 0x01 0x01 0x01  = 16843009
          *  0xA3 0x00 0x00 0x00 0x00 Header + un long 4 bytes
          * SI hay error enviar :
          *  0xA3 0xff

@@ -2,7 +2,7 @@
 #include <loraConfig.h>
 #include <EEPROM.h>
 
-#define BUTTON_PIN_BITMASK 0x3004 // HEX(2^12 + 2^12+2^13) = 0x3004
+#define BUTTON_PIN_BITMASK 0x3004 // HEX(2^2 + 2^12+2^13) = 0x3004
 
 
 void PrintRuntime()
