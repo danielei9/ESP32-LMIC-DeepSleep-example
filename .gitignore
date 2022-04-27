@@ -4,7 +4,7 @@
 .clang_complete
 .gcc-flags.json
 .pio
-ttn_credentials.h
+#ttn_credentials.h
 
 ### VisualStudioCode ###
 .vscode/*
