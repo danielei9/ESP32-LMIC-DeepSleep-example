@@ -2,6 +2,9 @@
 #include <loraConfig.h>
 #include <EEPROM.h>
 
+#define BUTTON_PIN_BITMASK 0x3004 // HEX(2^12 + 2^12+2^13) = 0x3004
+
+
 void PrintRuntime()
 {
     long seconds = millis() / 1000;
@@ -13,6 +16,8 @@ void PrintRuntime()
     Serial.print("Runtime: ");
     Serial.print(seconds);
     Serial.println(" seconds");
+
+    if(seconds > 120 ) ESP.restart();
 }
 
 void SaveLMICToRTC(int deepsleep_sec)
@@ -54,11 +59,12 @@ void LoadLMICFromRTC()
     LMIC = RTC_LMIC;
 }
 
-void GoDeepSleep()
+void GoDeepSleep(long intervalSeconds)
 {
     Serial.println(F("Go DeepSleep"));
     PrintRuntime();
     Serial.flush();
-    esp_sleep_enable_timer_wakeup(TX_INTERVAL * 1000000);
+    esp_sleep_enable_ext1_wakeup(BUTTON_PIN_BITMASK, ESP_EXT1_WAKEUP_ANY_HIGH);
+    esp_sleep_enable_timer_wakeup(intervalSeconds * 1000000);
     esp_deep_sleep_start();
 }

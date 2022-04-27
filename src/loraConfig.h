@@ -19,8 +19,7 @@ void os_getDevKey(u1_t *buf) { memcpy_P(buf, APPKEY, 16); }
 bool joined = false;
 static osjob_t sendjob;
 
-// Schedule TX every this many seconds
-const unsigned TX_INTERVAL = 30;
+
 
 // Saves the LMIC structure during DeepSleep
 RTC_DATA_ATTR lmic_t RTC_LMIC;
@@ -186,7 +185,7 @@ void PrintLMICVersion()
 }
 
 
-void do_send(osjob_t *j, uint8_t * buffer)
+void do_send(osjob_t *j, uint8_t * buffer,int length)
 {
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND)
@@ -196,7 +195,7 @@ void do_send(osjob_t *j, uint8_t * buffer)
     else
     {
         // Prepare upstream data transmission at the next possible time.
-        LMIC_setTxData2(1, buffer, buffer[4] - 1, 0);
+        LMIC_setTxData2(1, buffer, length, 0);
         Serial.println(F("Packet queued"));
     }
     // Next TX is scheduled after TX_COMPLETE event.
